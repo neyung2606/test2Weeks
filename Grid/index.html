@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div>
+            <label for="row">Row</label>
+            <input type="number" min="1" name="row" value="1">
+            <label for="col">Column</label>
+            <input type="number" min="1" name="col" value="1">
+            <button class="custom">Custom Table</button>
+            <button class="infinity">infinity</button>
+        </div>
+
+        <table>
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        const row = document.querySelector('[name="row"]');
+        const col = document.querySelector('[name="col"]');
+        const custom = document.querySelector('.custom');
+        const infinity = document.querySelector('.infinity');
+        const tableHead = document.querySelector('thead');
+        const tableBody = document.querySelector('tbody');
+        let numInner = "";
+        let data = [];
+        const max = 1000;
+        const min = 1;
+        let check = true;
+
+        function createTable(row, col) {
+            if (!check) data = [];
+            let numHead = "";
+            let numInner = "";  
+            numHead += '<tr>';
+            for (let i = 1; i <= col; i++) {
+                numHead += `<th>${i}</th>`;
+            }
+            numHead += '</tr>';
+            for (let i = 0; i < row; i++) {
+                numInner += `<tr>`;
+                let dataRow = [];
+                for (let j = 0; j < col; j++) {
+                    let number = Math.round(Math.random() * (max - min) + min);
+                    numInner += `<td>${number}</td>`;
+                    dataRow[j] = number;
+                }
+                data.push(dataRow);
+                numInner += '</tr>';
+            }
+            tableHead.innerHTML = numHead;
+            tableBody.innerHTML = numInner;
+            console.log(check)
+        }
+
+        function createTableCustom() {
+            createTable(row.value, col.value);
+        }
+
+        function addData() {
+            let numHead = "";
+            numHead += '<tr>'
+            for (let i = 1; i <= 15; i++) {
+                numHead += `<th>${i}</th>`;
+            }
+            numHead += '</tr>';
+            for (let i = 0; i < 100; i++) {
+                numInner += `<tr>`;
+                let dataRow = [];
+                for (let j = 0; j < 15; j++) {
+                    let number = Math.round(Math.random() * (max - min) + min);
+                    numInner += `<td>${number}</td>`;
+                    dataRow[j] = number;
+                }
+                data.push(dataRow);
+                numInner += '</tr>';
+            }
+            tableHead.innerHTML = numHead;
+            tableBody.innerHTML = numInner;
+        }
+
+        function rollWithData() {
+            if (check) data = [];
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+                addData();
+            }
+            window.addEventListener('scroll', () => {
+                rollWithData();
+                check = false
+            });
+            console.log(check);
+        }
+
+        function sortTable(e) {
+            const index = e.target.cellIndex;
+            for (let i = 0; i < data.length - 1; i++) {
+                for (j = i + 1; j < data.length; j++) {
+                    if (data[i][index] > data[j][index]) {
+                        let change = [];
+                        change = data[i];
+                        data[i] = data[j];
+                        data[j] = change;
+                    }
+                }
+            }
+            numInner = '';
+            for (let i = 0; i < data.length; i++) {
+                numInner += '<tr>';
+                for (let j = 0; j < data[i].length; j++) {
+                    numInner += `<td>${data[i][j]}</td>`;
+                }
+                numInner += '</tr>';
+            }
+            tableBody.innerHTML = numInner;
+        }
+        custom.addEventListener('click', () => {
+            createTableCustom();
+            check = false
+        });
+        infinity.addEventListener('click', () => {
+            rollWithData();
+            check = true;
+        });
+        tableHead.addEventListener('click', sortTable);
+    </script>
+</body>
+</html>

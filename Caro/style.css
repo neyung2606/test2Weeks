@@ -1,0 +1,41 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    font-size: 10px;
+}
+
+.container {
+    width: 33rem;
+    height: 35rem;
+    margin: 50px auto;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.box {
+    width: 10rem;
+    height: 10rem;
+    border: 1px solid black;
+    cursor: pointer;
+    color: black;
+    font-size: 50px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box:hover, .win {
+    background-color: red;
+    color: gray;
+}
+
+.winner {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 auto;
+}
+
+button {
+    margin: 5rem 12rem;
+}

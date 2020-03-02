@@ -1,0 +1,19 @@
+thead th { 
+    position: sticky; 
+    top: 0; 
+}
+
+table { 
+    border-collapse: collapse; 
+    width: 100%; 
+    text-align: center;
+}
+
+th, td { 
+    padding: 10px 16px;
+    border: 1px solid black;
+}
+
+th { 
+    background: greenyellow; 
+}
